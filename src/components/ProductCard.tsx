@@ -7,6 +7,7 @@ export interface Product {
   name: string;
   store: string;
   price: number;
+  reducedPrice?: number;
 }
 
 interface ProductCardProps {
@@ -14,6 +15,9 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ product }: ProductCardProps) => {
+  const hasDiscount = product.reducedPrice !== undefined;
+  const displayPrice = hasDiscount ? product.reducedPrice! : product.price;
+  
   return (
     <Card className="hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
       <CardContent className="p-6">
@@ -28,9 +32,21 @@ export const ProductCard = ({ product }: ProductCardProps) => {
             </div>
           </div>
           <div className="flex flex-col items-end gap-2">
-            <Badge className="bg-primary text-primary-foreground text-lg font-bold px-4 py-2">
-              {product.price.toFixed(2)} лв
+            {hasDiscount && (
+              <span className="text-sm text-muted-foreground line-through">
+                {product.price.toFixed(2)} лв
+              </span>
+            )}
+            <Badge 
+              className={`${hasDiscount ? 'bg-destructive' : 'bg-primary'} text-white text-lg font-bold px-4 py-2`}
+            >
+              {displayPrice.toFixed(2)} лв
             </Badge>
+            {hasDiscount && (
+              <span className="text-xs font-semibold text-destructive">
+                -{(((product.price - product.reducedPrice!) / product.price) * 100).toFixed(0)}% отстъпка
+              </span>
+            )}
           </div>
         </div>
       </CardContent>

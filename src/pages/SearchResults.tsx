@@ -9,20 +9,27 @@ import { Button } from "@/components/ui/button";
 // Mock data - will be replaced with real data from kolkostruva.bg API
 const mockProducts: Product[] = [
   { id: "1", name: "Мляко Краве Пълномаслено 3.6% 1л", store: "Kaufland", price: 2.49 },
-  { id: "2", name: "Мляко Краве Пълномаслено 3.6% 1л", store: "Lidl", price: 2.39 },
+  { id: "2", name: "Мляко Краве Пълномаслено 3.6% 1л", store: "Lidl", price: 2.39, reducedPrice: 1.99 },
   { id: "3", name: "Мляко Краве Пълномаслено 3.6% 1л", store: "Billa", price: 2.59 },
   { id: "4", name: "Мляко Краве Обезмаслено 1л", store: "Kaufland", price: 2.29 },
-  { id: "5", name: "Мляко Краве Обезмаслено 1л", store: "Fantastico", price: 2.45 },
+  { id: "5", name: "Мляко Краве Обезмаслено 1л", store: "Fantastico", price: 2.45, reducedPrice: 2.19 },
   { id: "6", name: "Хляб Добруджански 600г", store: "Lidl", price: 1.19 },
-  { id: "7", name: "Хляб Добруджански 600г", store: "Kaufland", price: 1.29 },
-  { id: "8", name: "Кафе Nescafe Classic 200г", store: "Billa", price: 12.99 },
+  { id: "7", name: "Хляб Добруджански 600г", store: "Kaufland", price: 1.29, reducedPrice: 0.99 },
+  { id: "8", name: "Кафе Nescafe Classic 200г", store: "Billa", price: 12.99, reducedPrice: 9.99 },
   { id: "9", name: "Кафе Nescafe Classic 200г", store: "Kaufland", price: 11.99 },
   { id: "10", name: "Кафе Nescafe Classic 200г", store: "Metro", price: 11.49 },
   { id: "11", name: "Масло Слънчогледово 1л", store: "Kaufland", price: 3.99 },
-  { id: "12", name: "Масло Слънчогледово 1л", store: "Lidl", price: 3.79 },
+  { id: "12", name: "Масло Слънчогледово 1л", store: "Lidl", price: 3.79, reducedPrice: 3.29 },
   { id: "13", name: "Захар Бяла 1кг", store: "Billa", price: 2.19 },
   { id: "14", name: "Захар Бяла 1кг", store: "Fantastico", price: 2.29 },
-  { id: "15", name: "Ориз Бял 1кг", store: "Metro", price: 2.99 },
+  { id: "15", name: "Ориз Бял 1кг", store: "Metro", price: 2.99, reducedPrice: 2.49 },
+  { id: "16", name: "Чай Зелен 20 пакетчета", store: "Kaufland", price: 3.49 },
+  { id: "17", name: "Чай Черен English Breakfast 25 пакетчета", store: "Lidl", price: 2.99, reducedPrice: 2.49 },
+  { id: "18", name: "Чай Билков Лайка 20 пакетчета", store: "Billa", price: 3.29 },
+  { id: "19", name: "Чай Плодов Горски плодове 20 пакетчета", store: "Fantastico", price: 3.19, reducedPrice: 2.69 },
+  { id: "20", name: "Чай Зелен с Жасмин 25 пакетчета", store: "Metro", price: 4.29 },
+  { id: "21", name: "Чай Ройбос 15 пакетчета", store: "Kaufland", price: 4.99, reducedPrice: 3.99 },
+  { id: "22", name: "Чай Мента 20 пакетчета", store: "Lidl", price: 2.79 },
 ];
 
 const SearchResults = () => {
