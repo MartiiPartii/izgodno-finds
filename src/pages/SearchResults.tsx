@@ -3,7 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { SearchBar } from "@/components/SearchBar";
 import { ProductCard, Product } from "@/components/ProductCard";
-import { AlertCircle, ArrowLeft } from "lucide-react";
+import { AlertCircle, ArrowLeft, Store } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 // Mock data - will be replaced with real data from kolkostruva.bg API
@@ -126,19 +126,42 @@ const SearchResults = () => {
                   </p>
                 </div>
 
-                <div className="space-y-8">
+                <div className="space-y-6">
                   {Object.entries(productsByStore).map(([store, products]) => (
-                    <div key={store} className="bg-card rounded-lg border p-6">
-                      <div className="flex items-center justify-between mb-4 pb-4 border-b">
-                        <h3 className="text-2xl font-bold">{store}</h3>
-                        <span className="text-sm text-muted-foreground">
-                          {products.length} {products.length === 1 ? 'продукт' : 'продукта'}
-                        </span>
-                      </div>
-                      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                        {products.map((product) => (
-                          <ProductCard key={product.id} product={product} />
-                        ))}
+                    <div key={store} className="relative overflow-hidden bg-gradient-card rounded-2xl border-2 border-border/50 shadow-lg">
+                      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-primary"></div>
+                      <div className="p-6">
+                        <div className="flex items-center justify-between mb-6 pb-4 border-b-2 border-dashed border-border">
+                          <div className="flex items-center gap-3">
+                            <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow">
+                              <Store className="h-6 w-6 text-white" />
+                            </div>
+                            <div>
+                              <h3 className="text-2xl font-black bg-gradient-primary bg-clip-text text-transparent">
+                                {store}
+                              </h3>
+                              <p className="text-xs text-muted-foreground mt-0.5">
+                                {products.length} {products.length === 1 ? 'продукт' : 'продукта'}
+                              </p>
+                            </div>
+                          </div>
+                          {products.some(p => p.reducedPrice) && (
+                            <div className="bg-destructive/10 text-destructive px-4 py-2 rounded-lg border border-destructive/20 animate-pulse-glow">
+                              <span className="text-sm font-bold">🔥 Има промоции</span>
+                            </div>
+                          )}
+                        </div>
+                        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+                          {products.map((product, index) => (
+                            <div 
+                              key={product.id} 
+                              className="animate-fade-in"
+                              style={{ animationDelay: `${index * 50}ms` }}
+                            >
+                              <ProductCard product={product} />
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   ))}
