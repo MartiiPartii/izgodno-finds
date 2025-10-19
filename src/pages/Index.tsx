@@ -6,8 +6,8 @@ import { AboutSection } from "@/components/AboutSection";
 const Index = () => {
   const navigate = useNavigate();
 
-  const handleSearch = (query: string) => {
-    navigate(`/search?q=${encodeURIComponent(query)}`);
+  const handleSearch = (query: string, city: string) => {
+    navigate(`/search?q=${encodeURIComponent(query)}&city=${encodeURIComponent(city)}`);
   };
 
   return (

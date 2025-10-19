@@ -36,7 +36,9 @@ const SearchResults = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const query = searchParams.get("q") || "";
+  const city = searchParams.get("city") || "София";
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [productsByStore, setProductsByStore] = useState<Record<string, Product[]>>({});
 
   useEffect(() => {
     if (query) {
@@ -45,11 +47,22 @@ const SearchResults = () => {
         product.name.toLowerCase().includes(query.toLowerCase())
       );
       setFilteredProducts(results);
+      
+      // Group products by store
+      const grouped = results.reduce((acc, product) => {
+        if (!acc[product.store]) {
+          acc[product.store] = [];
+        }
+        acc[product.store].push(product);
+        return acc;
+      }, {} as Record<string, Product[]>);
+      
+      setProductsByStore(grouped);
     }
   }, [query]);
 
-  const handleSearch = (newQuery: string) => {
-    setSearchParams({ q: newQuery });
+  const handleSearch = (newQuery: string, newCity: string) => {
+    setSearchParams({ q: newQuery, city: newCity });
   };
 
   const handleBackHome = () => {
@@ -73,10 +86,11 @@ const SearchResults = () => {
               Обратно към началото
             </Button>
             
-            <div className="bg-white/95 backdrop-blur-sm p-6 rounded-xl shadow-lg max-w-3xl mx-auto">
+            <div className="bg-white/95 backdrop-blur-sm p-6 rounded-xl shadow-lg max-w-4xl mx-auto">
               <SearchBar 
                 onSearch={handleSearch} 
                 placeholder="Търсете продукт..."
+                initialCity={city}
               />
             </div>
           </div>
@@ -105,16 +119,28 @@ const SearchResults = () => {
               <div>
                 <div className="mb-8">
                   <h2 className="text-3xl font-bold mb-2">
-                    Резултати за "{query}"
+                    Резултати за "{query}" в {city}
                   </h2>
                   <p className="text-muted-foreground">
-                    Намерени {filteredProducts.length} {filteredProducts.length === 1 ? 'продукт' : 'продукта'}
+                    Намерени {filteredProducts.length} {filteredProducts.length === 1 ? 'продукт' : 'продукта'} в {Object.keys(productsByStore).length} {Object.keys(productsByStore).length === 1 ? 'магазин' : 'магазина'}
                   </p>
                 </div>
 
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                  {filteredProducts.map((product) => (
-                    <ProductCard key={product.id} product={product} />
+                <div className="space-y-8">
+                  {Object.entries(productsByStore).map(([store, products]) => (
+                    <div key={store} className="bg-card rounded-lg border p-6">
+                      <div className="flex items-center justify-between mb-4 pb-4 border-b">
+                        <h3 className="text-2xl font-bold">{store}</h3>
+                        <span className="text-sm text-muted-foreground">
+                          {products.length} {products.length === 1 ? 'продукт' : 'продукта'}
+                        </span>
+                      </div>
+                      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                        {products.map((product) => (
+                          <ProductCard key={product.id} product={product} />
+                        ))}
+                      </div>
+                    </div>
                   ))}
                 </div>
               </div>

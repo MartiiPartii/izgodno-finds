@@ -2,7 +2,7 @@ import { SearchBar } from "./SearchBar";
 import heroImage from "@/assets/hero-groceries.jpg";
 
 interface HeroProps {
-  onSearch: (query: string) => void;
+  onSearch: (query: string, city: string) => void;
 }
 
 export const Hero = ({ onSearch }: HeroProps) => {
